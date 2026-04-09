@@ -1,3 +1,11 @@
+<<<<<<< HEAD
 *.exe
 .vscode/
 tempCodeRunnerFile.cpp
+=======
+.vscode/
+*.log
+*.tmp
+*.user
+*.DS_Store
+>>>>>>> 8d9eedf0c9a092abaff2b6ddf852ce1de7e4d716
