@@ -1,4 +1,3 @@
-//main file of the project [Deyaa is Back]
+// This is the main file of the project
 #include <iostream>
 using namespace std;
-//khaled was here
