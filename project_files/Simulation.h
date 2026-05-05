@@ -147,4 +147,17 @@ public:
             }
         }
     }
+
+    //The Getters 
+    bool getIsRunning() const {
+        return isRunning;
+    }
+
+    int getCurrentTime() const {
+        return currentTime;
+    }
+
+    int getQueueSize() const {
+        return customerQueue.getQueueSize();
+    }
 };
