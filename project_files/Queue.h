@@ -100,7 +100,7 @@ public:
         }
 
         // Case 2: If the customer is normal, add to the rear of the queue
-        if (!c.getIsVip()) {
+        if (!c.getIsVIP()) {
             rear->next = newNode;
             rear = newNode;
             count++;
@@ -112,7 +112,7 @@ public:
         // From here on, we know the new customer is a VIP
 
         // Case 3: If the front customer is normal, the VIP jumps to the front
-        if (!front->data.getIsVip()) {
+        if (!front->data.getIsVIP()) {
             newNode->next = front;
             front = newNode;
             count++;
@@ -123,7 +123,7 @@ public:
         Node* temp = front;
         
         // Traverse as long as the next node exists AND the next node is also a VIP
-        while (temp->next != NULL && temp->next->data.getIsVip()) {
+        while (temp->next != NULL && temp->next->data.getIsVIP()) {
             temp = temp->next;
         }
 

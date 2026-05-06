@@ -41,7 +41,7 @@ public:
     int getWaitingTime() const {
         return waitingTime;
     }
-    bool getIsVip() const {
+    bool getIsVIP() const {
         return isVip;
     }
     
