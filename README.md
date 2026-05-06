@@ -20,7 +20,8 @@ This project is a comprehensive simulation of a service-based system (e.g., a ba
 *   **Compiler:** g++
 
 ## 📂 Project Structure
-
+Based on the current repository organization:
+```text
 Data-Structure-project/
 ├── src/                # Header files and Source files
 │   ├── Controller.h
@@ -37,7 +38,7 @@ Data-Structure-project/
 │   └── sfml-xxx-3.dll  # Pre-included library dependencies
 ├── .gitignore          
 └── README.md           
-
+```
 
 ## ⚙️ How to Compile & Run
 
