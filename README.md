@@ -1,5 +1,9 @@
+إليك النسخة المحدثة من ملف الـ **README.md** مع إضافة رابط تحميل مكتبة SFML المباشر وتنسيق قسم المتطلبات ليكون أكثر وضوحاً للمستخدمين:
+
+---
+
 # 🚀 Queue Simulation System
-**Data Structures Project | First Year, Faculty of CSIT**
+**Data Structures Project | First Year, Faculty of Computers and Artificial Intelligence**
 
 ## 📝 Overview
 This project is a comprehensive simulation of a service-based system (e.g., a bank or a clinic). It utilizes a **Linked List-based Queue** to manage customer flow, featuring a robust **VIP Priority** system where VIP customers are strategically inserted into the queue to receive faster service.
@@ -17,10 +21,9 @@ This project is a comprehensive simulation of a service-based system (e.g., a ba
 ## 🛠️ Tech Stack
 *   **Language:** C++
 *   **Library:** SFML 3.0.2 (Graphics, Window, System)
-*   **Compiler:** g++
+*   **Compiler:** g++ (GCC 14.2.0 MinGW-w64)
 
 ## 📂 Project Structure
-Based on the current repository organization:
 ```text
 Data-Structure-project/
 ├── src/                # Header files and Source files
@@ -43,8 +46,9 @@ Data-Structure-project/
 ## ⚙️ How to Compile & Run
 
 ### 1. Prerequisites
-*   Ensure **SFML 3.0.2** is installed in the path: `C:\SFML-3.0.2`.
-*   Ensure the **Compiler** (g++) is added to your system Environment Variables.
+*   **SFML 3.0.2:** Download the required version (GCC 14.2.0 MinGW-w64 64-bit) from [this link](https://www.sfml-dev.org/files/SFML-3.0.2-windows-gcc-14.2.0-mingw-64-bit.zip).
+    *   **Installation:** Extract the contents to `C:\SFML-3.0.2` to ensure the compilation paths match.
+*   **C++ Compiler:** Ensure `g++` is installed and added to your system Environment Variables.
 
 ### 2. Compilation
 Execute the following command from the **root directory** to allow the **Compiler** to locate the **Header** files inside the `src` folder:
@@ -71,3 +75,5 @@ You can modify the simulation behavior by adjusting constants in the **Header** 
 *   **Adham**
 *   **Asser**
 *   **Ahmed**
+
+---
