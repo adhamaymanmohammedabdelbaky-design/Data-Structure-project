@@ -1,7 +1,3 @@
-إليك النسخة المحدثة من ملف الـ **README.md** مع إضافة رابط تحميل مكتبة SFML المباشر وتنسيق قسم المتطلبات ليكون أكثر وضوحاً للمستخدمين:
-
----
-
 # 🚀 Queue Simulation System
 **Data Structures Project | First Year, Faculty of Computers and Artificial Intelligence**
 
