@@ -33,7 +33,7 @@ private:
             rear = newNode;
         }
         count++;
-    }
+    };
 
 public:
     // Default Constructor
@@ -184,4 +184,16 @@ public:
         
         return temp->data;
     }
-};
+
+
+    // Updates the waiting time for every customer currently in the queue
+   // Called every tick by the Simulation so wait times stay accurate
+void updateWaitingTimes(int currentTime) {
+    Node* temp = front;
+    while (temp != NULL) {
+        temp->data.calculateWaitingTime(currentTime);
+        temp = temp->next;
+    }
+
+
+}};

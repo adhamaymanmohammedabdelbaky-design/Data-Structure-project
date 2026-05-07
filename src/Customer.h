@@ -7,6 +7,7 @@ class Customer {
     int id;
     int arrivalTime;
     int serviceTime;
+    int waitingTime;
     bool isVip;
 
 public:
@@ -15,6 +16,7 @@ public:
         this->arrivalTime = 0;
         this->serviceTime = 0;
         this->isVip = false;
+        this->waitingTime= 0;
     }
 
     Customer(int id, int arrivalTime, int serviceTime, bool isVip){
@@ -22,6 +24,7 @@ public:
         this->arrivalTime = arrivalTime;
         this->serviceTime = serviceTime;
         this->isVip = isVip;
+         this->waitingTime = 0;
     }
 
     // Getters 
@@ -36,5 +39,13 @@ public:
     }
     bool getIsVIP() const {
         return isVip;
+    }
+
+    void calculateWaitingTime(int currentTime) {
+    waitingTime = currentTime - arrivalTime;
+    }
+
+    int getWaitingTime() const {
+    return waitingTime;
     }
 };

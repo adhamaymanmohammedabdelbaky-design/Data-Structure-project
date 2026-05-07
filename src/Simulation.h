@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <random>
+#include <fstream>
 #include "Server.h"
 #include "Queue.h"
 
@@ -11,6 +12,7 @@ private:
     int maxSimulationTime;
     int totalCustomersArrived;
     int totalCustomersServed;
+    int totalWaitingTime;      // Accumulated waiting time of all served customers
     int nextArrivalTime;
 
     std::vector<Server> servers;
@@ -42,6 +44,7 @@ public:
         this->maxSimulationTime = 0;
         this->totalCustomersArrived = 0;
         this->totalCustomersServed = 0;
+        this->totalWaitingTime = 0;
         this->nextArrivalTime = 0;
         this->isRunning = false;
         this->isPaused = false;
@@ -58,15 +61,16 @@ public:
 
         totalCustomersArrived = 0;
         totalCustomersServed = 0;
+        totalWaitingTime = 0;
         nextArrivalTime = 0;
 
         isRunning = true;
         isPaused = false;
 
         customerQueue.clearQueue(); // Clear the queue directly using the new public function
-        queueHistory.clear();    // Clear old queue history
+        queueHistory.clear();       // Clear old queue history
 
-        int numServers = 3;      // Default number of servers
+        int numServers = 3;         // Default number of servers
         servers.clear();
         servers.resize(numServers);
 
@@ -75,7 +79,7 @@ public:
     }
 
     // Updates the whole simulation by one time tick
-    // This function is usually called repeatedly by the GUI or main loop
+    // This function is usually called repeatedly by the Controller
     void updateSimulation() {
         if (!isRunning || isPaused) {
             return; // Do nothing if the simulation is not running or is paused
@@ -87,10 +91,11 @@ public:
             return;
         }
 
-        updateServers();                               // Update the status of all servers
-        processArrival();                              // Handle new customer arrivals
-        assignCustomersToServers();                    // Assign waiting customers to free servers
-        
+        updateServers();                                        // Update the status of all servers
+        processArrival();                                       // Handle new customer arrivals
+        assignCustomersToServers();                             // Assign waiting customers to free servers
+        customerQueue.updateWaitingTimes(currentTime);         // Update waiting time for all queued customers
+
         // Save the current queue size for graph drawing
         queueHistory.push_back(customerQueue.getQueueSize());
 
@@ -105,7 +110,7 @@ public:
 
             // Create a new customer with random service time and VIP status
             int serviceTime = getRandomInt(5, 10); // Random service time between 5 and 10
-            bool isVip = getRandomVIP();           // Randomly determine if the customer is VIP
+            bool isVip = getRandomVIP();            // Randomly determine if the customer is VIP
 
             // Create a new customer with ID, arrival time, service time, and VIP status
             Customer newCustomer(
@@ -128,11 +133,16 @@ public:
         for (int i = 0; i < servers.size(); i++) {
             bool wasBusy = servers[i].isBusy();
 
+            // Capture the waiting time of the current customer before service ends
+            // This is the moment they leave — their final waiting time is recorded here
+            int waitingTimeBeforeFinish = servers[i].getCurrentCustomer().getWaitingTime();
+
             servers[i].updateTime();
 
             // If the server was busy and became free, then one customer has finished service
             if (wasBusy && servers[i].isFree()) {
                 totalCustomersServed++;
+                totalWaitingTime += waitingTimeBeforeFinish; // Accumulate their waiting time
             }
         }
     }
@@ -145,6 +155,66 @@ public:
                 servers[i].assignCustomer(nextCustomer);
             }
         }
+    }
+
+    // Writes a summary report to a text file when the simulation ends
+    void printFinalReport() {
+        std::ofstream reportFile("simulation_report.txt");
+
+        if (!reportFile.is_open()) {
+            return; // If the file can't be opened, silently exit
+        }
+
+        // Calculate average waiting time
+        double avgWaitingTime = 0.0;
+        if (totalCustomersServed > 0) {
+            avgWaitingTime = (double)totalWaitingTime / totalCustomersServed;
+        }
+
+        // Calculate peak queue size from history
+        int peakQueueSize = 0;
+        for (int i = 0; i < queueHistory.size(); i++) {
+            if (queueHistory[i] > peakQueueSize) {
+                peakQueueSize = queueHistory[i];
+            }
+        }
+
+        // Calculate how many customers are still unserved
+        int customersInSystem = totalCustomersArrived - totalCustomersServed;
+
+        reportFile << "========================================\n";
+        reportFile << "         SIMULATION FINAL REPORT        \n";
+        reportFile << "========================================\n\n";
+
+        reportFile << "Simulation Duration  : " << maxSimulationTime << " ticks\n";
+        reportFile << "Number of Servers    : " << servers.size() << "\n\n";
+
+        reportFile << "----------------------------------------\n";
+        reportFile << "CUSTOMER STATISTICS\n";
+        reportFile << "----------------------------------------\n";
+        reportFile << "Total Arrived        : " << totalCustomersArrived << "\n";
+        reportFile << "Total Served         : " << totalCustomersServed << "\n";
+        reportFile << "Still in System      : " << customersInSystem << "\n\n";
+
+        reportFile << "----------------------------------------\n";
+        reportFile << "PERFORMANCE STATISTICS\n";
+        reportFile << "----------------------------------------\n";
+        reportFile << "Average Waiting Time : " << avgWaitingTime << " ticks\n";
+        reportFile << "Peak Queue Size      : " << peakQueueSize << " customers\n\n";
+
+        reportFile << "----------------------------------------\n";
+        reportFile << "SERVER STATISTICS\n";
+        reportFile << "----------------------------------------\n";
+        for (int i = 0; i < servers.size(); i++) {
+            reportFile << "Server " << (i + 1) << "             : "
+                       << servers[i].getTotalServedCount() << " customers served\n";
+        }
+
+        reportFile << "\n========================================\n";
+        reportFile << "           END OF REPORT               \n";
+        reportFile << "========================================\n";
+
+        reportFile.close();
     }
 
     // Getters used by the GUI to read simulation data
