@@ -31,6 +31,7 @@ public:
             updateSystem();     // Update simulation based on time
             gui.updateGUI();    // Redraw the GUI every frame
         }
+        sim.printFinalReport();
     }
 
     // Updates the simulation based on the tick clock

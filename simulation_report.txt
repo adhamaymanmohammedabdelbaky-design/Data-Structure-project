@@ -1,0 +1,30 @@
+========================================
+         SIMULATION FINAL REPORT        
+========================================
+
+Simulation Duration  : 80 ticks
+Number of Servers    : 3
+
+----------------------------------------
+CUSTOMER STATISTICS
+----------------------------------------
+Total Arrived        : 53
+Total Served         : 29
+Still in System      : 24
+
+----------------------------------------
+PERFORMANCE STATISTICS
+----------------------------------------
+Average Waiting Time : 12.3793 ticks
+Peak Queue Size      : 21 customers
+
+----------------------------------------
+SERVER STATISTICS
+----------------------------------------
+Server 1             : 11 customers served
+Server 2             : 9 customers served
+Server 3             : 9 customers served
+
+========================================
+           END OF REPORT               
+========================================

@@ -159,8 +159,9 @@ public:
 
     // Writes a summary report to a text file when the simulation ends
     void printFinalReport() {
-        std::ofstream reportFile("simulation_report.txt");
+        
 
+std::ofstream reportFile("../simulation_report.txt");
         if (!reportFile.is_open()) {
             return; // If the file can't be opened, silently exit
         }
